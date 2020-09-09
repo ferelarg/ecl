@@ -173,7 +173,7 @@ const HomePage = ({isEmbed, mainContentMode, ready, hasSelectedItem, filtersVisi
             <Filters />
             <PresetsContainer />
             <ExportCsvContainer />
-            <Ad />
+            {/* <Ad /> */}
           </div>
         </div>
         }
@@ -185,17 +185,18 @@ const HomePage = ({isEmbed, mainContentMode, ready, hasSelectedItem, filtersVisi
         <div className={classNames('main', {'embed': isEmbed})}>
           { !isEmbed && <div className="disclaimer">
             <span  dangerouslySetInnerHTML={{__html: settings.home.header}} />
+            {/* Commented to customize Equinix branding
             Please <OutboundLink to={`https://github.com/${settings.global.repo}`}>open</OutboundLink> a pull request to
-            correct any issues. Greyed logos are not open source. Last Updated: {window.lastUpdated}
+            correct any issues. Greyed logos are not open source. Last Updated: {window.lastUpdated} */}
           </div> }
-          { !isEmbed && <SummaryContainer /> }
+          {/* { !isEmbed && <SummaryContainer /> } */}
 
           <div className="cards-section">
             <SwitchButtonContainer />
             <div className="right-buttons">
               <ZoomButtonsContainer/>
               <FullscreenButtonContainer/>
-              <TweetButton cls="tweet-button-main"/>
+              {/* <TweetButton cls="tweet-button-main"/> */}
             </div>
             { isBigPicture &&
             <AutoSizer>

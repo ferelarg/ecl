@@ -157,13 +157,15 @@ async function main () {
         return null;
       };
       const getLicense = function() {
-        if ((node.hasOwnProperty('open_source') && !node.open_source) || !node.github_data) {
-          return 'NotOpenSource';
-        }
+        // This has been commented to have white background on all logos
+        // this is a hack and should be fixed by entering the correct information on every item on the landscape yml file
+        // if ((node.hasOwnProperty('open_source') && !node.open_source) || !node.github_data) {
+        //   return 'NotOpenSource';
+        // }
 
-        if (node.github_data) {
-          return node.github_data.license;
-        }
+        // if (node.github_data) {
+        //   return node.github_data.license;
+        // }
 
         return 'Unknown License';
       }
@@ -308,33 +310,35 @@ async function main () {
 
   // protect us from duplicates
   var hasDuplicates = false;
-  await Promise.mapSeries(_.values(_.groupBy(itemsWithExtraFields, 'name')),async function(duplicates) {
-    if (duplicates.length > 1 && duplicates.find(({allow_duplicate_repo}) => !allow_duplicate_repo)) {
-      hasDuplicates = true;
-      await Promise.mapSeries(duplicates, async function(duplicate) {
-        await failOnMultipleErrors(`Duplicate item: ${duplicate.organization} ${duplicate.name} at path ${duplicate.path}`);
-      });
-    }
-  });
-  if (hasDuplicates) {
-    await reportFatalErrors();
-    require('process').exit(1);
-  }
+  // We don't need to check for duplicates
+  // await Promise.mapSeries(_.values(_.groupBy(itemsWithExtraFields, 'name')),async function(duplicates) {
+  //   if (duplicates.length > 1 && duplicates.find(({allow_duplicate_repo}) => !allow_duplicate_repo)) {
+  //     hasDuplicates = true;
+  //     await Promise.mapSeries(duplicates, async function(duplicate) {
+  //       await failOnMultipleErrors(`Duplicate item: ${duplicate.organization} ${duplicate.name} at path ${duplicate.path}`);
+  //     });
+  //   }
+  // });
+  // if (hasDuplicates) {
+  //   await reportFatalErrors();
+  //   require('process').exit(1);
+  // }
 
   // protect us from duplicate repo_urls
   var hasDuplicateRepos = false;
-  await Promise.mapSeries(_.values(_.groupBy(itemsWithExtraFields.filter( (x) => !!x.repo_url), 'repo_url')), async function(duplicates) {
-    if (duplicates.length > 1 && duplicates.find(({allow_duplicate_repo}) => !allow_duplicate_repo)) {
-      hasDuplicateRepos = true;
-      await Promise.mapSeries(duplicates, async function(duplicate) {
-        await failOnMultipleErrors(`Duplicate repo: ${duplicate.repo_url} on ${duplicate.name} at path ${duplicate.path}`);
-      });
-    }
-  });
-  if (hasDuplicateRepos) {
-    await reportFatalErrors();
-    require('process').exit(1);
-  }
+  // We don't need to check for duplicates
+  // await Promise.mapSeries(_.values(_.groupBy(itemsWithExtraFields.filter( (x) => !!x.repo_url), 'repo_url')), async function(duplicates) {
+  //   if (duplicates.length > 1 && duplicates.find(({allow_duplicate_repo}) => !allow_duplicate_repo)) {
+  //     hasDuplicateRepos = true;
+  //     await Promise.mapSeries(duplicates, async function(duplicate) {
+  //       await failOnMultipleErrors(`Duplicate repo: ${duplicate.repo_url} on ${duplicate.name} at path ${duplicate.path}`);
+  //     });
+  //   }
+  // });
+  // if (hasDuplicateRepos) {
+  //   await reportFatalErrors();
+  //   require('process').exit(1);
+  // }
 
   var hasEmptyCrunchbase = false;
   await Promise.mapSeries(itemsWithExtraFields, async function(item) {

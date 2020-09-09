@@ -7,7 +7,7 @@ import { calculateSize, outerPadding, headerHeight } from "../src/utils/landscap
 const getLastCommitSha = function() {
   return require('child_process').execSync(`cd '${projectPath}' && git log -n 1 --format=format:%h`).toString('utf-8').trim();
 }
-const port = process.env.PORT || '4000';
+const port = process.env.PORT || '3000';
 async function main() {
   const sha = await getLastCommitSha();
   const time = new Date().toISOString().slice(0, 19) + 'Z';
@@ -55,10 +55,13 @@ async function main() {
       const { width, height } = sizes[url]
       const page = await browser.newPage();
       await page.setViewport({ width, height, deviceScaleFactor })
+      await page.setDefaultNavigationTimeout(0);
 
       const fullUrl = `http://localhost:${port}/${url}?version=${version}&scale=false&pdf`
       console.info(`visiting ${fullUrl}`);
-      await page.goto(fullUrl, { waitUntil: 'networkidle0'});
+      await page.goto(fullUrl);
+      // The line below didn't work for us (equinix) and we fixed by replacing it with the line above
+      //await page.goto(fullUrl, { waitUntil: 'networkidle0'});
       await page.screenshot({ path: resolve(projectPath, 'dist', 'images', fileName), fullPage: false });
       if (pdfFileName) {
         await page.emulateMediaType('screen');

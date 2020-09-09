@@ -83,6 +83,9 @@ const Fullscreen = ({ready, groupedItems, landscapeSettings, version}) => {
             }}>
           </div>
           <LandscapeContent groupedItems={groupedItems} landscapeSettings={landscapeSettings} padding={0} />
+          {/*
+          Commented to customize Equinix branding
+
           <div style={{
             position: 'absolute',
             top: 10,
@@ -109,7 +112,7 @@ const Fullscreen = ({ready, groupedItems, landscapeSettings, version}) => {
             paddingTop: 3,
             paddingBottom: 3,
             borderRadius: 5
-          }}>Greyed logos are not open source</div> }
+          }}>Greyed logos are not open source</div> } */}
           <div style={{
             position: 'absolute',
             top: 10,
@@ -117,13 +120,13 @@ const Fullscreen = ({ready, groupedItems, landscapeSettings, version}) => {
             fontSize: 14,
             color: 'white',
           }}>{landscapeSettings.title} </div>
-          <div style={{
+          {/* <div style={{
             position: 'absolute',
             top: 30,
             left: 15,
             fontSize: 12,
             color: '#eee',
-          }}>{version}</div>
+          }}>{version}</div> */}
         </div>
       </div>
   );
