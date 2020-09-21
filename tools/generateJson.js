@@ -365,19 +365,20 @@ async function main () {
   }
 
   var hasBadHomepage = false;
-  await Promise.mapSeries(itemsWithExtraFields, async function(item) {
-    if (!item.homepage_url) {
-      hasBadHomepage = true;
-      await failOnMultipleErrors(`${item.name}  has an empty or missing homepage_url`);
-    } else if (!item.homepage_url.startsWith('http://') && !item.homepage_url.startsWith('https://')) {
-      hasBadHomepage = true;
-      await failOnMultipleErrors(`${item.name}  homepage_url ${item.homepage_url} should start from http:// or https://`);
-    }
-  });
-  if (hasBadHomepage) {
-    await reportFatalErrors();
-    require('process').exit(1);
-  }
+  // We don't need to check for homepages
+  // await Promise.mapSeries(itemsWithExtraFields, async function(item) {
+  //   if (!item.homepage_url) {
+  //     hasBadHomepage = true;
+  //     await failOnMultipleErrors(`${item.name}  has an empty or missing homepage_url`);
+  //   } else if (!item.homepage_url.startsWith('http://') && !item.homepage_url.startsWith('https://')) {
+  //     hasBadHomepage = true;
+  //     await failOnMultipleErrors(`${item.name}  homepage_url ${item.homepage_url} should start from http:// or https://`);
+  //   }
+  // });
+  // if (hasBadHomepage) {
+  //   await reportFatalErrors();
+  //   require('process').exit(1);
+  // }
 
   await Promise.mapSeries(itemsWithExtraFields, async function(item) {
     if (item.twitter && !item.latestTweetDate) {
