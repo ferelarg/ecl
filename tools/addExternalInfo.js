@@ -156,19 +156,19 @@ async function main() {
     removeNonReferencedImages(imageEntries);
   }
 
-  console.info('Fetching last tweet dates');
-  const savedTwitterEntries = await extractSavedTwitterEntries();
-  const twitterEntries = await fetchTwitterEntries({
-    cache: savedTwitterEntries,
-    preferCache: useTwitterCache,
-    crunchbaseEntries: crunchbaseEntries
-  });
+  // console.info('Fetching last tweet dates');
+  // const savedTwitterEntries = await extractSavedTwitterEntries();
+  // const twitterEntries = await fetchTwitterEntries({
+  //   cache: savedTwitterEntries,
+  //   preferCache: useTwitterCache,
+  //   crunchbaseEntries: crunchbaseEntries
+  // });
 
-  if (hasFatalErrors()) {
-    console.info('Reporting fatal errors');
-    await reportFatalErrors();
-    process.exit(1);
-  }
+  // if (hasFatalErrors()) {
+  //   console.info('Reporting fatal errors');
+  //   await reportFatalErrors();
+  //   process.exit(1);
+  // }
 
 
   console.info('Fetching best practices');
@@ -292,16 +292,16 @@ async function main() {
       }
       node.best_practice_data = bestPracticeEntry;
       delete node.best_practice_data.repo_url;
-      // twitter
-      const twitter = actualTwitter(node, node.crunchbase_data);
+      // // twitter
+      // const twitter = actualTwitter(node, node.crunchbase_data);
 
-      const twitterEntry = _.clone(_.find(twitterEntries, {
-        url: twitter
-      }));
-      if (twitterEntry) {
-        node.twitter_data = twitterEntry;
-        delete twitterEntry.url;
-      }
+      // const twitterEntry = _.clone(_.find(twitterEntries, {
+      //   url: twitter
+      // }));
+      // if (twitterEntry) {
+      //   node.twitter_data = twitterEntry;
+      //   delete twitterEntry.url;
+      // }
 
     }
   });

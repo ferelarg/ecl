@@ -73,9 +73,7 @@ const linkTag = (label, { name, url = null, color = 'blue', multiline = false })
 }
 
 const parentTag = (project) => {
-  const membership = Object.values(settings.membership).find(({ crunchbase_and_children }) => {
-    return isParent(crunchbase_and_children, project)
-  });
+  const membership = false;
 
   if (membership) {
     const { label, name, crunchbase_and_children } = membership;

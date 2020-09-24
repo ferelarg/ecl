@@ -197,7 +197,7 @@ async function main () {
           return true;
         }
 
-        return (settings.membership[parts[1]] || {}).enduser;
+        return true;
       };
 
       // calculating a membership
@@ -276,36 +276,36 @@ async function main () {
     }
   });
 
-  if (settings.global.flags.companies) {
-    // Handle companies in a special way
-    const hasCompanyCategory = (function() {
-      var result = false;
-      tree.map(function(node) {
-        if (node && node.category === null && node.name === settings.global.flags.companies) {
-          result = true;
-        }
-      });
-      return result;
-    })();
-    if (!hasCompanyCategory) {
-      await failOnSingleError(`can not find a category with name: "${settings.global.flags.companies}". We use that category to get a list of member companies`);
-    }
+  // if (settings.global.flags.companies) {
+  //   // Handle companies in a special way
+  //   const hasCompanyCategory = (function() {
+  //     var result = false;
+  //     tree.map(function(node) {
+  //       if (node && node.category === null && node.name === settings.global.flags.companies) {
+  //         result = true;
+  //       }
+  //     });
+  //     return result;
+  //   })();
+  //   if (!hasCompanyCategory) {
+  //     await failOnSingleError(`can not find a category with name: "${settings.global.flags.companies}". We use that category to get a list of member companies`);
+  //   }
 
-    _.each(itemsWithExtraFields, function(item) {
-      if (item.category === settings.global.flags.companies) {
-        item.project = 'company';
-        item.relation = 'company';
-      }
-    });
-  }
+  //   _.each(itemsWithExtraFields, function(item) {
+  //     if (item.category === settings.global.flags.companies) {
+  //       item.project = 'company';
+  //       item.relation = 'company';
+  //     }
+  //   });
+  // }
 
-  if (settings.global.flags.hide_license_for_categories) {
-    _.each(itemsWithExtraFields, function(item) {
-      if (settings.global.flags.hide_license_for_categories.indexOf(item.category) !== -1) {
-        item.hideLicense = true;
-      }
-    });
-  }
+  // if (settings.global.flags.hide_license_for_categories) {
+  //   _.each(itemsWithExtraFields, function(item) {
+  //     if (settings.global.flags.hide_license_for_categories.indexOf(item.category) !== -1) {
+  //       item.hideLicense = true;
+  //     }
+  //   });
+  // }
 
 
   // protect us from duplicates
@@ -492,7 +492,7 @@ async function main () {
 
 
   // now update membership, only after we've checked crunchbase issues properly
-  const members = await getMembers();
+  const members = {};
   _.each(itemsWithExtraFields, function(item) {
     const membership = (function() {
       // direct membership
