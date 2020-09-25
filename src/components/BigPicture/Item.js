@@ -10,9 +10,9 @@ import {
 } from "../../utils/landscapeCalculations";
 
 const LargeItem = (({ item, onSelectItem, isMember }) => {
-  const relationInfo = fields.relation.values.find(({ id }) => id === item.relation);
-  const color = relationInfo.big_picture_color;
-  const label = relationInfo.big_picture_label;
+  //const relationInfo = fields.relation.values.find(({ id }) => id === item.relation);
+  const color = 'rgb(24,54,114)';
+  const label = item.name;
   const textHeight = isMember ? 0 : 10
   const padding = 2
 
@@ -20,16 +20,14 @@ const LargeItem = (({ item, onSelectItem, isMember }) => {
     cursor: 'pointer',
     position: 'relative',
     background: color,
-    visibility: item.isVisible ? 'visible' : 'hidden',
-    width: largeItemWidth,
-    height: largeItemHeight }}
+    visibility: item.isVisible ? 'visible' : 'hidden'}}
               onClick={ () => onSelectItem(item.id)}
   >
     <img loading="lazy" src={item.href} style={{
-      width: `calc(100% - ${2 * padding}px)`,
-      height: `calc(100% - ${2 * padding + textHeight}px)`,
-      padding: 5,
-      margin: `${padding}px ${padding}px 0 ${padding}px`,
+      width: largeItemWidth,
+      height: largeItemHeight,
+      padding: '5px 5px 10px 5px',
+      margin: `${padding}px`,
     }} data-href={item.id} alt={item.name} />
     <div style={{position: 'absolute', bottom: 0, width: '100%', height: textHeight + padding, textAlign: 'center', verticalAlign: 'middle', background: color, color: 'white', fontSize: 6.7, lineHeight: '13px'}}>
       {label}
@@ -58,20 +56,18 @@ const SmallItem = (({ item, onSelectItem }) => {
 })
 
 export default props => {
-  const { isLarge, isVisible, category, oss } = props.item
-  const isMember = category === settings.global.membership;
+  const { isLarge, isVisible, oss } = props.item
+  const isMember = false;
 
   const style = {
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center',
-    gridColumnEnd: `span ${isLarge ? 2 : 1}`,
-    gridRowEnd: `span ${isLarge ? 2 : 1}`
+    alignItems: 'center'
   }
 
   return <Fade timeout={1000} in={isVisible}>
     <div className={isMember || oss ? 'oss' : 'nonoss'} style={style}>
-      {isLarge ? <LargeItem {...props} isMember={isMember} /> : <SmallItem {...props} />}
+      <LargeItem {...props} isMember={isMember} />
     </div>
   </Fade>
 }
