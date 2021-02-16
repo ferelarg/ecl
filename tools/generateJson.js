@@ -442,7 +442,7 @@ async function main () {
       }
     })
   }
-  await removeNonReferencedImages();
+  // await removeNonReferencedImages();
 
   var hasBadLandscape = false;
   await Promise.mapSeries(settings.big_picture.main.elements, async function(element) {
